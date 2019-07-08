@@ -60,7 +60,17 @@ def hash_table_insert(hash_table, key, value):
 # If you try to remove a value that isn't there, print a warning.
 # '''
 def hash_table_remove(hash_table, key):
-    pass
+    # Get the hash version of the key
+    hash_key = hash(key)
+    # Get the index by modulo-ing the key by the ht's capacity
+    index = key % hash_table.capacity
+    # If there is a value other than None at index
+    if hash_table.storage[index] != None:
+        # The value is set to None
+        hash_table.storage[index] == None
+    # Else, print a warning
+    else:
+        print(f"{key} not found in hash table, cannot be removed.")
 
 
 # '''
