@@ -15,15 +15,19 @@ class Pair:
 # '''
 class BasicHashTable:
     def __init__(self, capacity):
-        pass
+        self.capacity = capacity
+        self.storage = [None] * capacity
 
 
 # '''
 # Fill this in.
 # Research and implement the djb2 hash function
 # '''
-def hash(string, max):
-    pass
+def hash(string):
+    hash = 5381
+    for x in string:
+        hash = ((( hash << 5) + hash) + ord(x)) & 0xFFFFFFFF
+    return hash
 
 
 # '''
@@ -32,9 +36,24 @@ def hash(string, max):
 # If you are overwriting a value with a different key, print a warning.
 # '''
 def hash_table_insert(hash_table, key, value):
-    pass
-
-
+    # Get the hash version of key
+    key_hash = hash(key)
+    # Make a new pair using the key, value pair that was passed into the function
+    new_pair = Pair(key, value)
+    # Get the index by doing key_hash modulo hash_table.capacity
+    index = key_hash % hash_table.capacity
+    # If the index already has a pair associated with it, see if the keys match.
+    if hash_table.storage[index] != None:
+        # If the keys do not match, print a warning and do nothing
+        if key == hash_table.storage[index].key:
+            print(f"Collision detected for {key} and {hash_table.storage[index].key}")
+        # If the keys do match, update the value
+        else:
+            hash_table.storage[index].value = value
+    # Else
+    else:
+        # insert the pair into the appropriate index
+        hash_table.storage[index] = new_pair
 # '''
 # Fill this in.
 
@@ -53,10 +72,14 @@ def hash_table_retrieve(hash_table, key):
     pass
 
 
+
 def Testing():
     ht = BasicHashTable(16)
 
     hash_table_insert(ht, "line", "Here today...\n")
+    for pair in ht.storage:
+        if pair != None:
+            print(pair.key)
 
     hash_table_remove(ht, "line")
 
@@ -64,6 +87,5 @@ def Testing():
         print("...gone tomorrow (success!)")
     else:
         print("ERROR:  STILL HERE")
-
 
 Testing()
