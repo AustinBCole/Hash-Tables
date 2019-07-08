@@ -17,14 +17,18 @@ class LinkedPair:
 # '''
 class HashTable:
     def __init__(self, capacity):
-        pass
+        self.capacity = capacity
+        self.storage = [None] * capacity
 
 
 # '''
 # Research and implement the djb2 hash function
 # '''
-def hash(string, max):
-    pass
+def hash(string):
+    hash = 5381
+    for x in string:
+        hash = ((( hash << 5) + hash) + ord(x)) & 0xFFFFFFFF
+    return hash
 
 
 # '''
@@ -33,7 +37,34 @@ def hash(string, max):
 # Hint: Used the LL to handle collisions
 # '''
 def hash_table_insert(hash_table, key, value):
-    pass
+    # Get the hashified key
+    hash_key = hash(key)
+    # Get the index using the hashified key and ht's capacity
+    index = hash_key % hash_table.capacity
+    # If hash_table[index] != None
+    if hash_table[index] != None:
+        # If key is equal to the index's linkedPair key
+        if key == hash_table[index].key:
+            # replace index's value with new value
+            hash_table[index].value = value
+        # Else, handle collision
+        else:
+            # current_linked_pair is equal to pair at index
+            current_linked_pair = hash_table[index]
+            # While current_linked_pair.next is not equal to None:
+            while current_linked_pair.next != None:
+                # current_linked_pair is equal to current_linked_pair.next
+                current_linked_pair = current_linked_pair.next
+            # Create LinkedPair with key, value arguments
+            new_linked_pair = LinkedPair(key, value)
+            # current_linked_pair.next is equal to new_linked_pair
+            current_linked_pair.next = new_linked_pair
+    
+    # Else, insert linkedPair at appropriate index
+    else:
+        # Create LinkedPair with key, value arguments
+        new_linked_pair = LinkedPair(key, value)
+        hash_table[index] = new_linked_pair
 
 
 # '''
