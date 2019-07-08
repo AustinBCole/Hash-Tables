@@ -73,8 +73,34 @@ def hash_table_insert(hash_table, key, value):
 # If you try to remove a value that isn't there, print a warning.
 # '''
 def hash_table_remove(hash_table, key):
-    pass
-
+    # Get hashified key
+    hash_key = hash(key)
+    # Get index using hashified key and ht's capacity
+    index = hash_key % hash_table.capacity
+    # if hash_table[index] is not equal to None
+    if hash_table[index] != None
+        # If node key is equal to key
+        if hash_table[index].key == key:
+            # hash_table[index] is now equal to node.next
+            hash_table[index] = hash_table[index].next
+            # Return
+            return
+        # Check to see if the index contains a linked list
+        # If linked list
+        if hash_table[index].next != None:
+            # Iterate over node.next
+            current_linked_pair = hash_table[index]
+            while current_linked_pair != None:
+                # If node key is equal to key
+                if current_linked_pair.next.key == key:
+                    # Patch up linked list by making node.next = node.next.next
+                    current_linked_pair.next = current_linked_pair.next.next
+                    # Return
+                    return
+    # Else
+    else:
+        # Print a warning
+        print(f"{key} not found in hash table, cannot be removed.")
 
 # '''
 # Fill this in.
