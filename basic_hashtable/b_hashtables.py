@@ -63,11 +63,11 @@ def hash_table_remove(hash_table, key):
     # Get the hash version of the key
     hash_key = hash(key)
     # Get the index by modulo-ing the key by the ht's capacity
-    index = key % hash_table.capacity
+    index = hash_key % hash_table.capacity
     # If there is a value other than None at index
     if hash_table.storage[index] != None:
         # The value is set to None
-        hash_table.storage[index] == None
+        hash_table.storage[index] = None
     # Else, print a warning
     else:
         print(f"{key} not found in hash table, cannot be removed.")
@@ -79,17 +79,22 @@ def hash_table_remove(hash_table, key):
 # Should return None if the key is not found.
 # '''
 def hash_table_retrieve(hash_table, key):
-    pass
-
+    # Get the hash version of the key
+    hash_key = hash(key)
+    # Get the index by modulo-ing the key by the ht's capacity
+    index = hash_key % hash_table.capacity
+    # If key is equal to None
+    if hash_table.storage[index] == None:
+        # Return None
+        return None
+    # Return index's value
+    return hash_table.storage[index]
 
 
 def Testing():
     ht = BasicHashTable(16)
 
     hash_table_insert(ht, "line", "Here today...\n")
-    for pair in ht.storage:
-        if pair != None:
-            print(pair.key)
 
     hash_table_remove(ht, "line")
 
