@@ -97,6 +97,8 @@ def hash_table_remove(hash_table, key):
                     current_linked_pair.next = current_linked_pair.next.next
                     # Return
                     return
+                current_linked_pair = current_linked_pair.next
+
     # Else
     else:
         # Print a warning
@@ -108,7 +110,31 @@ def hash_table_remove(hash_table, key):
 # Should return None if the key is not found.
 # '''
 def hash_table_retrieve(hash_table, key):
-    pass
+    # Get hashified key
+    hash_key = hash(key)
+    # Get index using hashified key and ht's capacity
+    index = hash_key % hash_table.capacity
+    # if hash_table[index] is not equal to None
+    if hash_table[index] != None
+        # If node key is equal to key
+        if hash_table[index].key == key:
+            # Return index value
+            return hash_table[index].value
+        # Check to see if the index contains a linked list
+        # If linked list
+        if hash_table[index].next != None:
+            # Iterate over node.next
+            current_linked_pair = hash_table[index].next
+            while current_linked_pair != None:
+                # If node key is equal to key
+                if current_linked_pair.key == key:
+                    # Return current_linked_pair value
+                    return current_linked_pair.value
+                current_linked_pair = current_linked_pair.next
+    # Else
+    else:
+        # Print a warning
+        print(f"{key} not found in hash table, cannot be removed.")
 
 
 # '''
