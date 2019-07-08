@@ -141,7 +141,7 @@ def hash_table_retrieve(hash_table, key):
 # Fill this in
 # '''
 def hash_table_resize(hash_table):
-    pass
+    hash_table.capacity *= 2
 
 
 def Testing():
