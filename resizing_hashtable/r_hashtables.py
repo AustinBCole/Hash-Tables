@@ -55,10 +55,16 @@ def hash_table_insert(hash_table, key, value):
             while current_linked_pair.next != None:
                 # current_linked_pair is equal to current_linked_pair.next
                 current_linked_pair = current_linked_pair.next
-            # Create LinkedPair with key, value arguments
-            new_linked_pair = LinkedPair(key, value)
-            # current_linked_pair.next is equal to new_linked_pair
-            current_linked_pair.next = new_linked_pair
+            # Check if key matches pair key
+            if current_linked_pair.key == key:
+                # Replace old value with new value
+                current_linked_pair.value = value
+            # Else
+            else:
+                # Create LinkedPair with key, value arguments
+                new_linked_pair = LinkedPair(key, value)
+                    # current_linked_pair.next is equal to new_linked_pair
+                current_linked_pair.next = new_linked_pair
     
     # Else, insert linkedPair at appropriate index
     else:
@@ -89,7 +95,7 @@ def hash_table_remove(hash_table, key):
         # If linked list
         if hash_table.storage[index].next != None:
             # Iterate over node.next
-            current_linked_pair = hash_table[index]
+            current_linked_pair = hash_table.storage[index]
             while current_linked_pair != None:
                 # If node key is equal to key
                 if current_linked_pair.next.key == key:
@@ -161,12 +167,20 @@ def Testing():
     print(hash_table_retrieve(ht, "line_3"))
 
     old_capacity = len(ht.storage)
-    print(old_capacity)
     ht = hash_table_resize(ht)
     new_capacity = len(ht.storage)
-    print(new_capacity)
 
     print("Resized hash table from " + str(old_capacity)
           + " to " + str(new_capacity) + ".")
 
-Testing()
+#ht = HashTable(2)
+#
+#print(hash("key-1") % ht.capacity)
+#print(hash("key-2") % ht.capacity)
+#print(hash("key-3") % ht.capacity)
+#print(hash("key-4") % ht.capacity)
+#print(hash("key-5") % ht.capacity)
+#print(hash("key-6") % ht.capacity)
+#print(hash("key-7") % ht.capacity)
+#print(hash("key-8") % ht.capacity)
+#print(hash("key-9") % ht.capacity)
