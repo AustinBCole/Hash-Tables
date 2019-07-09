@@ -18,6 +18,7 @@ class LinkedPair:
 class HashTable:
     def __init__(self, capacity):
         self.capacity = capacity
+        self.original_capacity = capacity
         self.storage = [None] * capacity
         # Add count property to help us know when we should increase capacity
         self.count = 0
@@ -122,6 +123,8 @@ def hash_table_remove(hash_table, key):
                 if current_linked_pair.next.key == key:
                     # Patch up linked list by making node.next = node.next.next
                     current_linked_pair.next = current_linked_pair.next.next
+                    # Subtract one from count
+                    hash_table.count -= 1
                     # Return
                     return
                 current_linked_pair = current_linked_pair.next
@@ -130,6 +133,21 @@ def hash_table_remove(hash_table, key):
     else:
         # Print a warning
         print(f"{key} not found in hash table, cannot be removed.")
+    # If the hashtable has shrunk past a load factor of 0.2 and has been resized past the original size
+    if hash_table.count <= hash_table.capacity * 0.2 and hash_table.capacity > hash_table.original_capacity:
+        # Halve the capacity
+        # Create new capacity, new storage
+        new_capacity = hash_table.capacity / 2
+        new_storage = [None] * new_capacity
+        # Loop through hash table's storage
+        for i in range(0, hash_table.capacity):
+            # If the element is not None
+            if hash_table.storage[i] is not None:
+                # Hash key for new index
+                index = hash(hash_table.storage[i].key) % new_capacity
+                new_storage[index] = hash_table.storage[i]
+        hash_table.storage = new_storage
+        hash_table.capacity = new_capacity
 
 # '''
 # Fill this in.
