@@ -19,6 +19,8 @@ class HashTable:
     def __init__(self, capacity):
         self.capacity = capacity
         self.storage = [None] * capacity
+        # Add count property to help us know when we should increase capacity
+        self.count = 0
 
 
 # '''
@@ -71,6 +73,24 @@ def hash_table_insert(hash_table, key, value):
         # Create LinkedPair with key, value arguments
         new_linked_pair = LinkedPair(key, value)
         hash_table.storage[index] = new_linked_pair
+    # Increase hash table's count property
+    hash_table.count += 1
+    # Double size of hash table when it grows past load factor of 0.7
+    # Check to see if it has grown to or past the load factor
+    if hash_table.count >= hash_table.capacity * 0.7:
+        # Double the hash table's capacity
+        # Create new capacity, new storage
+        new_capacity = hash_table.capacity * 2
+        new_storage = [None] * new_capacity
+        # Loop through hash table's storage
+        for i in range(0, hash_table.capacity):
+            # If the element is not None
+            if hash_table.storage[i] is not None:
+                # Hash key for new index
+                index = hash(hash_table.storage[i].key) % new_capacity
+                new_storage[index] = hash_table.storage[i]
+        hash_table.storage = new_storage
+        hash_table.capacity = new_capacity
 
 
 # '''
@@ -84,6 +104,7 @@ def hash_table_remove(hash_table, key):
     # Get index using hashified key and ht's capacity
     index = hash_key % hash_table.capacity
     # if hash_table[index] is not equal to None
+    print(index)
     if hash_table.storage[index] != None:
         # If node key is equal to key
         if hash_table.storage[index].key == key:
