@@ -83,12 +83,14 @@ def hash_table_retrieve(hash_table, key):
     hash_key = hash(key)
     # Get the index by modulo-ing the key by the ht's capacity
     index = hash_key % hash_table.capacity
-    # If key is equal to None
-    if hash_table.storage[index] == None:
-        # Return None
-        return None
-    # Return index's value
-    return hash_table.storage[index]
+    # If index is not equal to None
+    if hash_table.storage[index] is not None:
+    # If key is equal to key that we are looking up
+        if hash_table.storage[index].key == key:
+            # Return value
+            return hash_table.storage[index].value
+    # Return none
+    return None
 
 
 def Testing():
